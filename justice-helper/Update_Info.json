@@ -1,5 +1,5 @@
 {
   "current_version": "2.2 Free",
-  "update_url": "https://github.com/MTGMODS/lua_scripts/raw/refs/heads/main/justice-helper/Justice%20Helper.lua",
-  "update_info": "- Переход на новое облако для поддержки умного розыска и штрафов\n- Финальное обновление перед переходом на Arizona Helper"
+  "update_url": "https://github.com/SAMP-Helpers/Justice/blob/main/justice-helper/Justice%20Helper.lua",
+  "update_info": "- РџРµСЂРµС…РѕРґ РЅР° РЅРѕРІРѕРµ РѕР±Р»Р°РєРѕ РґР»СЏ РїРѕРґРґРµСЂР¶РєРё СѓРјРЅРѕРіРѕ СЂРѕР·С‹СЃРєР° Рё С€С‚СЂР°С„РѕРІ\n- Р¤РёРЅР°Р»СЊРЅРѕРµ РѕР±РЅРѕРІР»РµРЅРёРµ РїРµСЂРµРґ РїРµСЂРµС…РѕРґРѕРј РЅР° Arizona Helper"
 }
