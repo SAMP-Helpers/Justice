@@ -3,8 +3,7 @@
 script_name("Justice Helper")
 script_description('This is a Cross-platform Lua script helper for Arizona RP players who work in the Ministry of Justice (PD and FBI) ??and the Ministry of Defense (Army)')
 script_author("MTG MODS")
-script_version("2.2 Free")
-
+script_version("2.3")
 require('lib.moonloader')
 require('encoding').default = 'CP1251'
 local u8 = require('encoding').UTF8
@@ -1768,7 +1767,7 @@ function initialize_commands()
 			sampAddChatMessage('[Justice Helper] {ffffff}Меню списка преступников закрыто!', message_color)
 		elseif not isActiveCommand then
 			lua_thread.create(function()
-				sampAddChatMessage('[Justice Helper] {ffffff}Начинаю сканирование всего /wanted, ожидайте...', message_color)
+				sampAddChatMessage('[Justice Helper] {ffffff}Начинаю сканирование всего /wanted, Ожидайте', message_color)
 				show_arz_notify('info', 'Justice Helper', "Сканирование /wanted...", 2500)
 				wanted_new = {}
 				check_wanted = true
@@ -2283,7 +2282,7 @@ function getNameOfARZVehicleModel(id)
 	if need_download_arzveh then
 		sampAddChatMessage('[Justice Helper] {ffffff}Пытаюсь скачать файл VehiclesArizona.json в папку ' .. path_arzvehicles, message_color)
 		download_arzvehicles = true
-		downloadFileFromUrlToPath('https://github.com/MTGMODS/arizona-helper/raw/refs/heads/main/SmartVEH/Vehicles.json', path_arzvehicles)
+		downloadFileFromUrlToPath('https://github.com/SAMP-Helpers/Justice/blob/main/Vehicles.json', path_arzvehicles)
 		return ' транспортного средства'
 	end
 end
@@ -2785,7 +2784,7 @@ function check_update()
 	sampAddChatMessage('[Justice Helper] {ffffff}Начинаю проверку на наличие обновлений...', message_color)
 	local path = configDirectory .. "/Update_Info.json"
 	os.remove(path)
-	local url = 'https://github.com/MTGMODS/lua_scripts/raw/refs/heads/main/justice-helper/Update_Info.json'
+	local url = 'https://github.com/SAMP-Helpers/Justice/blob/main/justice-helper/Update_Info.json'
 	if isMonetLoader() then
 		downloadToFile(url, path, function(type, pos, total_size)
 			if type == "finished" then
@@ -3092,7 +3091,7 @@ function sampev.onServerMessage(color,text)
 					sampAddChatMessage(text, 0xFF2DB043)
 					if message3 == text then
 						auto_uval_checker = true
-						sampSendChat('/fmute ' .. playerID .. ' 1 [AutoUval] Ожидайте...')
+						sampSendChat('/fmute ' .. playerID .. ' 1 [AutoUval] Ожидайте')
 					elseif tag == "R" then
 						sampSendChat("/rb "..name.." отправьте /rb +++ чтобы уволится ПСЖ!")
 					elseif tag == "F" then
@@ -3101,7 +3100,7 @@ function sampev.onServerMessage(color,text)
 				elseif ((message == "(( +++ ))" or message == "(( +++. ))") and (PlayerID == playerID)) then
 					sampAddChatMessage(text, 0xFF2DB043)
 					auto_uval_checker = true
-					sampSendChat('/fmute ' .. PlayerID .. ' 1 [AutoUval] Ожидайте...')
+					sampSendChat('/fmute ' .. PlayerID .. ' 1 [AutoUval] Ожидайте')
 				end
 			end)
 		elseif text:find("%[(.-)%] %[(.-)%] (.+) (.-)%[(.-)%]: (.+)") and color == 766526463 then -- /r или /f с тэгом
@@ -3116,7 +3115,7 @@ function sampev.onServerMessage(color,text)
 					sampAddChatMessage(text, 0xFF2DB043)
 					if message3 == text then
 						auto_uval_checker = true
-						sampSendChat('/fmute ' .. playerID .. ' 1 [AutoUval] Ожидайте...')
+						sampSendChat('/fmute ' .. playerID .. ' 1 [AutoUval] Ожидайте')
 					elseif tag == "R" then
 						sampSendChat("/rb "..name.."["..playerID.."], отправьте /rb +++ чтобы уволится ПСЖ!")
 					elseif tag == "F" then
@@ -3124,13 +3123,15 @@ function sampev.onServerMessage(color,text)
 					end
 				elseif ((message == "(( +++ ))" or  message == "(( +++. ))") and (PlayerID == playerID)) then
 					auto_uval_checker = true
-					sampSendChat('/fmute ' .. playerID .. ' 1 [AutoUval] Ожидайте...')
+					sampSendChat('/fmute ' .. playerID .. ' 1 [AutoUval] Ожидайте')
 				end
 			end)
 		end
 		
-		if text:find("(.+) заглушил%(а%) игрока (.+) на 1 минут. Причина: %[AutoUval%] Ожидайте...") and auto_uval_checker then
-			local Name, PlayerName, Time, Reason = text:match("(.+) заглушил%(а%) игрока (.+) на (%d+) минут. Причина: (.+)")
+		if text:find("(.+) заглушил%(а%) игрока (.+) на 1 минут. Причина: %[AutoUval%] Ожидайте") and auto_uval_checker then
+			local text2 = text:gsub('{......}', '')
+			local DATA, PlayerName, Time, Reason = text2:match("(.+) заглушил%(а%) игрока (.+) на 1 минут. Причина: (.+)")
+			local Name = DATA:match(" ([A-Za-z0-9_]+)%[")
 			local MyName = sampGetPlayerNickname(select(2, sampGetPlayerIdByCharHandle(PLAYER_PED)))
 			lua_thread.create(function ()
 				wait(50)
@@ -4505,7 +4506,7 @@ imgui.OnFrame(
 					imgui.SetCursorPosX(105 * settings.general.custom_dpi)
 					if imgui.Button(fa.DOWNLOAD .. u8' Загрузить ##smartuk') then
 						download_smartuk = true
-						downloadFileFromUrlToPath('https://github.com/MTGMODS/arizona-helper/raw/refs/heads/main/SmartUK/' .. getARZServerNumber() .. '/SmartUK.json', path_uk)
+						downloadFileFromUrlToPath('https://github.com/SAMP-Helpers/Justice/tree/main/SmartUK/' .. getARZServerNumber() .. '/SmartUK.json', path_uk)
 						imgui.OpenPopup(fa.CIRCLE_INFO .. u8' Justice Helper - Оповещение##donwloadsmartuk')
 					end
 					if imgui.BeginPopupModal(fa.CIRCLE_INFO .. u8' Justice Helper - Оповещение##donwloadsmartuk', _, imgui.WindowFlags.NoCollapse  + imgui.WindowFlags.NoResize) then
@@ -4733,7 +4734,7 @@ imgui.OnFrame(
 					imgui.SetCursorPosX(105 * settings.general.custom_dpi)
 					if imgui.Button(fa.DOWNLOAD .. u8' Загрузить ##smartpdd') then
 						download_smartpdd = true
-						downloadFileFromUrlToPath('https://github.com/MTGMODS/arizona-helper/raw/refs/heads/main/SmartPDD/' .. getARZServerNumber() .. '/SmartPDD.json', path_pdd)
+						downloadFileFromUrlToPath('https://github.com/SAMP-Helpers/Justice/tree/main/SmartPDD/' .. getARZServerNumber() .. '/SmartPDD.json', path_pdd)
 						imgui.OpenPopup(fa.CIRCLE_INFO .. u8' Justice Helper - Оповещение##donwloadsmartpdd')
 					end
 					if imgui.BeginPopupModal(fa.CIRCLE_INFO .. u8' Justice Helper - Оповещение##donwloadsmartpdd', _, imgui.WindowFlags.NoCollapse  + imgui.WindowFlags.NoResize) then
